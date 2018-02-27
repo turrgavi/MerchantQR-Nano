@@ -60,7 +60,7 @@ From here you can share your folder to read the HTML file from another device an
 
 * Simply:
 1. Open the "test.html" file in a browser window
-2. Run QtPy.py file
+2. Run Merchant QR Nano.py file
 3. Generate QR Codes to your heart's content
 4. Watch the browser window as you generate and approve/disapprove/cancel transactions
 
@@ -74,9 +74,7 @@ From here you can share your folder to read the HTML file from another device an
 ## Supported Currencies
 
 * NANO
-* Stellar Lumens
-* Bitcoin
-
+* More currencies can be added easily
 ## Authors
 
 * **Gavin Michael Turrell** - *Noob Developer* - [turrgavi](https://github.com/turrgavi)
