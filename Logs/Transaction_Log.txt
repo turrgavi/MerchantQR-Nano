@@ -379,3 +379,124 @@ Status: FAILED
 AUD Value: $839.99
 Time: 2018-02-26 16:11
 
+Requested: 1000 NANO
+Receiving Address: poop
+Status: FAILED
+AUD Value: $56.36
+Time: 2018-02-27 10:00
+
+Requested: 1239 NANO
+Receiving Address: poop
+Status: FAILED
+AUD Value: $69.83
+Time: 2018-02-27 10:01
+
+Requested: 34556 NANO
+Receiving Address: newpoop
+Status: FAILED
+AUD Value: $1959.64
+Time: 2018-02-27 10:06
+
+Requested: 0.01 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $0.00
+Time: 2018-02-27 10:06
+
+Requested: 23 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: FAILED
+AUD Value: $1.29
+Time: 2018-02-27 10:09
+
+Requested: 23.03 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $1.29
+Time: 2018-02-27 10:09
+
+Requested: 0.01 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: FAILED
+AUD Value: $0.00
+Time: 2018-02-27 10:10
+
+Requested: 0.01 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: FAILED
+AUD Value: $0.0005622
+Time: 2018-02-27 10:11
+
+Requested: 45 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: FAILED
+AUD Value: $2.5015607
+Time: 2018-02-27 10:29
+
+Requested: 2354 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $130.8594207
+Time: 2018-02-27 10:32
+
+Requested: 23 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $1.2785755
+Time: 2018-02-27 10:32
+
+Requested: 34 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $1.8680681
+Time: 2018-02-27 10:36
+
+Requested: 76 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $4.1756816
+Time: 2018-02-27 10:37
+
+Requested: 23 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $1.2679708
+Time: 2018-02-27 10:39
+
+Requested: 23 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $1.2679708
+Time: 2018-02-27 10:39
+
+Requested: 56 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+AUD Value: $3.0872333
+Time: 2018-02-27 10:40
+
+Requested: 34 NANO
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: FAILED
+AUD Value: $1.8743916
+Time: 2018-02-27 10:41
+
+Requested: $45
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: FAILED
+NANO Value: 2.4808125
+Time: 2018-02-27 10:42
+
+Requested: $345
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+NANO Value: 19.0195623
+Time: 2018-02-27 10:43
+
+Requested: $23
+Receiving Address: xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh
+Status: SUCCESSFUL
+NANO Value: 1.2628093
+Time: 2018-02-27 10:46
+
+65,xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh,xrb_3apgkcg36j7zounttzxnd1bin5rakrcw1ksj4jootsef3encnon8szs5brjh,FAILED3.5371905,2018-02-27 10:50
