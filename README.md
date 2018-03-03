@@ -14,6 +14,8 @@ transaction was successful or not.
 
 Using a raspberry pi with a small display with a simple browser proccessing the HTML file would be suitable for this.
 
+New version now supports automatic transaction confirmations. Requires desktop wallet with RPC enabled.
+
 ### Prerequisites
 
 In order to run this program, you will need a few things:
