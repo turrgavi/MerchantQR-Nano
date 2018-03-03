@@ -7,13 +7,16 @@ from PyQt5.QtCore import pyqtSlot
 from shutil import copyfile
 from coinmarketcap import Market
 import datetime
+import nano
+
+rpc = nano.rpc.Client('http://localhost:7076')
 
 coinmarketcap = Market()
 now = datetime.datetime.now()
 
 file = open("Logs/Tx.txt", "w").close()
 copyfile('Images/Logo.png', 'Images/GUI_test_QR.png')
-
+    
 class App(QMainWindow):
  
     def __init__(self):
@@ -43,16 +46,12 @@ class MyTableWidget(QWidget):
 # Initialize tab screen
         self.tabs = QTabWidget()
         self.tab1 = QWidget()	
-        #self.tab2 = QWidget()
-        #self.tab3 = QWidget()
         self.tab4 = QWidget()
         self.tab5 = QWidget()
         self.tabs.resize(300,200) 
  
 # Add tabs
         self.tabs.addTab(self.tab1,"Nano")
-        #self.tabs.addTab(self.tab2,"Lumens")
-        #self.tabs.addTab(self.tab3,"Bitcoin")
         self.tabs.addTab(self.tab5,"FIAT Conversion")
         self.tabs.addTab(self.tab4,"Settings")
 
@@ -165,16 +164,29 @@ class MyTableWidget(QWidget):
     #Fetch NANO Address and amount
         filea = open("NANO_ADDRESS.txt", "r")
         nano_address = filea.read()
-        nano_value = self.textbox1.text()
-        nano_discount = self.textboxdis.text()
+        filedis = open("NANO_DISCOUNT.txt", "r")
+        nano_discount = filedis.read()
+        nano_value = float(self.textbox1.text())
+
+        balance = str(nano_address)
+
+        current_balance = float(nano.conversion.convert(rpc.account_balance(balance)["balance"], "raw", "Mrai"))
+        new_balance=float(0)
+
+        print(current_balance)
+        print(nano_value)
+
+       
 
     #Convert NANO amount to AUD
-        audprice = float(nano_value)/float(price)
+        nano_discount_float = float(nano_discount)
+        audprice = nano_value/float(price)
         nano_aud = ("%.7f" % round(audprice,7))
-
+        nano_aud_float = float(nano_aud)
+        
     #Write transaction details to file for HTML readfile
         file = open("Logs/Tx.txt", "w")
-        file.write("You are sending $" + nano_value + " (" + nano_aud + " NANO) to " + nano_address + "\n\n--PENDING--")
+        file.write("You are sending $" + str(nano_value) + " (" + nano_aud + " NANO) to " + nano_address + "\n\n--PENDING--")
         file.close()
 
     #Generate QR Code Image
@@ -182,50 +194,67 @@ class MyTableWidget(QWidget):
         qr.png('Images/GUI_test_QR.png', scale=20)
 
     #Create Confirmation popup
-        buttonReply = QMessageBox.question(self, 'Waiting Confirmation', " QR Code generated! \n\nNANO Recieved? ",QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel, QMessageBox.Cancel)
-
-        if buttonReply == QMessageBox.Yes:
-
-        #If yes selected:
-            print('Transaction Confirmed')
-
-        #replace image with successful image
-            os.remove('Images/GUI_test_QR.png')
-            copyfile('Images/Success.png', 'Images/GUI_test_QR.png')
-
-        #Log successful transaction to file
-            print("You received " + nano_value + " NANO at [time]")
-            tx_log = open("Logs/Transaction_Log.csv", "a")
-            tx_log.write(nano_value + "," + nano_address + ",SUCCESSFUL," + nano_aud + "," + now.strftime("%Y-%m-%d %H:%M") + "\n")
-
-        #Write Successful transaction to HTML readfile
-            file = open("Logs/Tx.txt", "w")
-            file.write("You have sent $" + nano_value + " (" + nano_aud + " NANO) " + " to " + nano_address + "\n\n--PENDING--" + "\n\n--TRANSACTION SUCCESSFUL--")
-            file.close()
-
-        #set textbox back to default
-            self.textbox1.setText("")
+        
+        running = "true"
 
         
-        else:
+        while (running == "true"):
+            
+            new_total = ("%.7f" % round(current_balance+nano_aud_float,7))
+            new_balance_round = ("%.7f" % round(new_balance,7))
+            #new_total = (current_balance+nano_value)
+            print(nano_aud_float)
+            print(current_balance)
+            print(new_balance)
+            print(new_total)
+            #buttonReply = QMessageBox.question(self, 'Waiting Confirmation', " QR Code generated! \n\nNANO Recieved? ",QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel, QMessageBox.Cancel)
+            #if buttonReply == QMessageBox.Yes:
+            if (new_total == new_balance_round):
+            #If yes selected:
+                print('Transaction Confirmed')
+                print(new_balance)
+                running = "false"
+                os.remove('Images/GUI_test_QR.png')
+                copyfile('Images/Success.png', 'Images/GUI_test_QR.png')
+                
+            #replace image with successful image
+                
 
-    #if selected no
-            print('Transaction Failed')
+            #Log successful transaction to file
+                print("You received " + str(nano_value) + " NANO at [time]")
+                tx_log = open("Logs/Transaction_Log.csv", "a")
+                tx_log.write(str(nano_value) + "," + nano_address + ",SUCCESSFUL," + nano_aud + "," + now.strftime("%Y-%m-%d %H:%M") + "\n")
 
-        #Replace image with failed transaction
-            copyfile('Images/Failed.png', 'Images/GUI_test_QR.png')
+            #Write Successful transaction to HTML readfile
+                file = open("Logs/Tx.txt", "w")
+                file.write("You have sent $" + str(nano_value) + " (" + nano_aud + " NANO) " + " to " + nano_address + "\n\n--PENDING--" + "\n\n--TRANSACTION SUCCESSFUL--")
+                file.close()
 
-        #Write failed transaction to HTML readfile
-            file = open("Logs/Tx.txt", "w")
-            file.write("You attempted to send $" + nano_value + " (" + nano_aud + " NANO) " + " to " + nano_address + "\n\n--PENDING--" + "\n\n--TRANSACTION FAILED--")
-            file.close()
+            #set textbox back to default
+                self.textbox1.setText("")
+                QMessageBox.question(self, 'SUCCESS', "TRANSACTION CONFIRMED", QMessageBox.Ok)
+                file = open("Logs/Tx.txt", "w").close()
+                copyfile('Images/Logo.png', 'Images/GUI_test_QR.png') 
+            
+           # else:
 
-        #Log failed transaction
-            tx_log = open("Logs/Transaction_Log.csv", "a")
-            #tx_log.write("Requested: $" + nano_value + "\nReceiving Address: " + nano_address + "\nStatus: FAILED" + "\nNANO Value: " + nano_aud + "\nTime: " + now.strftime("%Y-%m-%d %H:%M") + "\n\n")
-            tx_log.write(nano_value + "," + nano_address + ",FAILED," + nano_aud + "," + now.strftime("%Y-%m-%d %H:%M") + "\n")
+        #if selected no
+               # print('Transaction Failed')
+                
+            #Replace image with failed transaction
+               # copyfile('Images/Failed.png', 'Images/GUI_test_QR.png')
 
+            #Write failed transaction to HTML readfile
+                #file = open("Logs/Tx.txt", "w")
+                #file.write("You attempted to send $" + str(nano_value) + " (" + nano_aud + " NANO) " + " to " + nano_address + "\n\n--PENDING--" + "\n\n--TRANSACTION FAILED--")
+                #file.close()
 
+            #Log failed transaction
+               # tx_log = open("Logs/Transaction_Log.csv", "a")
+                #tx_log.write("Requested: $" + nano_value + "\nReceiving Address: " + nano_address + "\nStatus: FAILED" + "\nNANO Value: " + nano_aud + "\nTime: " + now.strftime("%Y-%m-%d %H:%M") + "\n\n")
+               # tx_log.write(str(nano_value) + "," + nano_address + ",FAILED," + nano_aud + "," + now.strftime("%Y-%m-%d %H:%M") + "\n")
+
+            new_balance = float(nano.conversion.convert(rpc.account_balance(balance)["balance"], "raw", "Mrai"))
 
     #Address change events
     #save new nano address
@@ -260,7 +289,7 @@ class MyTableWidget(QWidget):
                 
         self.labelnano.setText("NANO Value: " + nano_AUD)
         
-        
+      
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
