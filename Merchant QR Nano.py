@@ -1,16 +1,19 @@
 import sys
 import os
 import pyqrcode
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow,QLabel, QApplication, QPushButton, QLineEdit, QMessageBox, QWidget, QAction, QTabWidget,QVBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import pyqtSlot
 from shutil import copyfile
 from coinmarketcap import Market
 import datetime
+import time
 import nano
+import psutil
 
 rpc = nano.rpc.Client('http://localhost:7076')
-
+process = QtCore.QProcess()
 coinmarketcap = Market()
 now = datetime.datetime.now()
 
@@ -55,8 +58,6 @@ class MyTableWidget(QWidget):
         self.tabs.addTab(self.tab5,"FIAT Conversion")
         self.tabs.addTab(self.tab4,"Settings")
 
-
-        
 # Create first tab
         self.tab1.layout = QVBoxLayout(self)
     #Set Tab Label
@@ -80,9 +81,7 @@ class MyTableWidget(QWidget):
         self.pushButton1.clicked.connect(self.on_click_nano)
         self.show()
 
-
 #BTC and XLM tabs removed for easier dev
-
 
 # Create Exchange tab
         self.tab5.layout = QVBoxLayout(self)
@@ -122,6 +121,10 @@ class MyTableWidget(QWidget):
 
         self.tab4.layout = QVBoxLayout(self)
 
+        self.pushButtonreset = QPushButton("RESET DISPLAY")
+        self.tab4.layout.addWidget(self.pushButtonreset)
+        self.tab4.setLayout(self.tab4.layout)
+        
         self.labeldis = QLabel(self)
         self.tab4.layout.addWidget(self.labeldis)
         self.labeldis.setText("Percentage Discount for NANO:")
@@ -142,6 +145,7 @@ class MyTableWidget(QWidget):
         self.tab4.layout.addWidget(self.pushButton4)
         self.tab4.setLayout(self.tab4.layout)
 
+        self.pushButtonreset.clicked.connect(self.on_click_display_reset)
         self.pushButton4.clicked.connect(self.on_click_nano_change)
         self.pushButtondis.clicked.connect(self.on_click_nano_change_dis)
         self.show()
@@ -150,7 +154,6 @@ class MyTableWidget(QWidget):
 #Add tabs to widget        
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
-
 
 #QR generation events
     #generate nano qr code
@@ -166,20 +169,15 @@ class MyTableWidget(QWidget):
         nano_address = filea.read()
         filedis = open("NANO_DISCOUNT.txt", "r")
         nano_discount = filedis.read()
-        nano_value = float(self.textbox1.text())
-
+        nano_discount_float = float(nano_discount)
+        nano_value = float(self.textbox1.text())*((100-nano_discount_float)/100)
         balance = str(nano_address)
-
         current_balance = float(nano.conversion.convert(rpc.account_balance(balance)["balance"], "raw", "Mrai"))
-        new_balance=float(0)
-
         print(current_balance)
         print(nano_value)
 
-       
-
     #Convert NANO amount to AUD
-        nano_discount_float = float(nano_discount)
+        new_balance=float(0)
         audprice = nano_value/float(price)
         nano_aud = ("%.7f" % round(audprice,7))
         nano_aud_float = float(nano_aud)
@@ -196,19 +194,17 @@ class MyTableWidget(QWidget):
     #Create Confirmation popup
         
         running = "true"
-
-        
         while (running == "true"):
-            
             new_total = ("%.7f" % round(current_balance+nano_aud_float,7))
             new_balance_round = ("%.7f" % round(new_balance,7))
-            #new_total = (current_balance+nano_value)
+            
             print(nano_aud_float)
             print(current_balance)
             print(new_balance)
             print(new_total)
             #buttonReply = QMessageBox.question(self, 'Waiting Confirmation', " QR Code generated! \n\nNANO Recieved? ",QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel, QMessageBox.Cancel)
             #if buttonReply == QMessageBox.Yes:
+            
             if (new_total == new_balance_round):
             #If yes selected:
                 print('Transaction Confirmed')
@@ -217,9 +213,6 @@ class MyTableWidget(QWidget):
                 os.remove('Images/GUI_test_QR.png')
                 copyfile('Images/Success.png', 'Images/GUI_test_QR.png')
                 
-            #replace image with successful image
-                
-
             #Log successful transaction to file
                 print("You received " + str(nano_value) + " NANO at [time]")
                 tx_log = open("Logs/Transaction_Log.csv", "a")
@@ -234,28 +227,12 @@ class MyTableWidget(QWidget):
                 self.textbox1.setText("")
                 QMessageBox.question(self, 'SUCCESS', "TRANSACTION CONFIRMED", QMessageBox.Ok)
                 file = open("Logs/Tx.txt", "w").close()
-                copyfile('Images/Logo.png', 'Images/GUI_test_QR.png') 
-            
-           # else:
-
-        #if selected no
-               # print('Transaction Failed')
+                copyfile('Images/Logo.png', 'Images/GUI_test_QR.png')
                 
-            #Replace image with failed transaction
-               # copyfile('Images/Failed.png', 'Images/GUI_test_QR.png')
+            new_balance = float(nano.conversion.convert(rpc.account_balance(balance)["balance"], "raw", "Mrai"))    
+            QtCore.QCoreApplication.processEvents()
 
-            #Write failed transaction to HTML readfile
-                #file = open("Logs/Tx.txt", "w")
-                #file.write("You attempted to send $" + str(nano_value) + " (" + nano_aud + " NANO) " + " to " + nano_address + "\n\n--PENDING--" + "\n\n--TRANSACTION FAILED--")
-                #file.close()
-
-            #Log failed transaction
-               # tx_log = open("Logs/Transaction_Log.csv", "a")
-                #tx_log.write("Requested: $" + nano_value + "\nReceiving Address: " + nano_address + "\nStatus: FAILED" + "\nNANO Value: " + nano_aud + "\nTime: " + now.strftime("%Y-%m-%d %H:%M") + "\n\n")
-               # tx_log.write(str(nano_value) + "," + nano_address + ",FAILED," + nano_aud + "," + now.strftime("%Y-%m-%d %H:%M") + "\n")
-
-            new_balance = float(nano.conversion.convert(rpc.account_balance(balance)["balance"], "raw", "Mrai"))
-
+    
     #Address change events
     #save new nano address
     @pyqtSlot()
@@ -272,24 +249,23 @@ class MyTableWidget(QWidget):
         filedis = open("NANO_DISCOUNT.txt", "w")
         filedis.write(nano_discount)
 
-
     @pyqtSlot()
     def on_click_AUD(self):
         amount = self.textboxaud.text()
-
-        
         nano_data = coinmarketcap.ticker("NANO", convert="AUD")
         nano_price = nano_data[0]['price_aud']
-        
         nano_conversion = float(amount)/float(nano_price)
-        
         print(nano_conversion)
-        nano_AUD = ("%.7f" % round(nano_conversion,7))
-        
-                
+        nano_AUD = ("%.7f" % round(nano_conversion,7))               
         self.labelnano.setText("NANO Value: " + nano_AUD)
+
+    @pyqtSlot()
+    def on_click_display_reset(self):
+        QMessageBox.question(self, 'Confirm Amount', "Display Reset", QMessageBox.Ok, QMessageBox.Ok)
+        file = open("Logs/Tx.txt", "w").close()
+        copyfile('Images/Logo.png', 'Images/GUI_test_QR.png')
+         
         
-      
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -298,3 +274,4 @@ if __name__ == '__main__':
     file = open("Logs/Tx.txt", "w").close()
     copyfile('Images/Logo.png', 'Images/GUI_test_QR.png')
     sys.exit(ret)
+    

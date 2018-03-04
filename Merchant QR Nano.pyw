@@ -1,6 +1,7 @@
 import sys
 import os
 import pyqrcode
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMainWindow,QLabel, QApplication, QPushButton, QLineEdit, QMessageBox, QWidget, QAction, QTabWidget,QVBoxLayout
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import pyqtSlot
@@ -209,6 +210,7 @@ class MyTableWidget(QWidget):
             print(new_total)
             #buttonReply = QMessageBox.question(self, 'Waiting Confirmation', " QR Code generated! \n\nNANO Recieved? ",QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel, QMessageBox.Cancel)
             #if buttonReply == QMessageBox.Yes:
+            QtCore.QCoreApplication.processEvents()
             if (new_total == new_balance_round):
             #If yes selected:
                 print('Transaction Confirmed')
