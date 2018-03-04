@@ -63,10 +63,11 @@ You should now be able to run the Merchant QR Nano.py
 From here you can share your folder to read the HTML file from another device and display it in a browser window.
 
 * Simply:
-1. Open the "QR Display.html" file in a browser window
-2. Run "Merchant QR Nano.py" file
-3. Generate QR Codes to your heart's content
-4. Watch the browser window as you generate and approve/disapprove/cancel transactions
+1. Open the desktop wallet
+2. Open the "QR Display.html" file in a browser window
+3. Run "Merchant QR Nano.py" file
+4. Generate QR Codes to your heart's content
+5. Watch the browser window as you generate and approve/disapprove/cancel transactions
 
 ## Built With
 
