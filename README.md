@@ -24,6 +24,8 @@ In order to run this program, you will need a few things:
 * CoinMarketCap API
 * PyQRCode
 * PyQt5
+* Nano Desktop Wallet with RPC enabled
+* Nano-Python
 
 ### Installing
 
@@ -61,10 +63,11 @@ You should now be able to run the Merchant QR Nano.py
 From here you can share your folder to read the HTML file from another device and display it in a browser window.
 
 * Simply:
-1. Open the "QR Display.html" file in a browser window
-2. Run "Merchant QR Nano.py" file
-3. Generate QR Codes to your heart's content
-4. Watch the browser window as you generate and approve/disapprove/cancel transactions
+1. Open the desktop wallet
+2. Open the "QR Display.html" file in a browser window
+3. Run "Merchant QR Nano.py" file
+4. Generate QR Codes to your heart's content
+5. Watch the browser window as you generate and approve/disapprove/cancel transactions
 
 ## Built With
 
@@ -72,6 +75,8 @@ From here you can share your folder to read the HTML file from another device an
 * [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5)
 * [PyQRCode](https://pypi.python.org/pypi/PyQRCode)
 * [CoinMarketCap API](https://pypi.python.org/pypi/coinmarketcap/)
+* [Nano Wallet](https://github.com/nanocurrency/raiblocks/releases)
+* [Nano Python](https://github.com/dourvaris/nano-python)
 
 ## Supported Currencies
 
