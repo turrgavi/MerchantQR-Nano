@@ -24,6 +24,8 @@ In order to run this program, you will need a few things:
 * CoinMarketCap API
 * PyQRCode
 * PyQt5
+* Nano Desktop Wallet with RPC enabled
+* Nano-Python
 
 ### Installing
 
@@ -72,6 +74,8 @@ From here you can share your folder to read the HTML file from another device an
 * [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5)
 * [PyQRCode](https://pypi.python.org/pypi/PyQRCode)
 * [CoinMarketCap API](https://pypi.python.org/pypi/coinmarketcap/)
+* [Nano Wallet](https://github.com/nanocurrency/raiblocks/releases)
+* [Nano Python](https://github.com/dourvaris/nano-python)
 
 ## Supported Currencies
 
