@@ -188,7 +188,7 @@ class MyTableWidget(QWidget):
         file.close()
 
     #Generate QR Code Image
-        qr = pyqrcode.create(nano_address+"?amount="+str(nano_aud_float))
+        qr = pyqrcode.create("xrb:"+nano_address+"?amount="+str(nano_aud_float))
         qr.png('Images/GUI_test_QR.png', scale=20)
 
     #Create Confirmation popup
