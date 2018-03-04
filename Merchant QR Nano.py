@@ -179,7 +179,7 @@ class MyTableWidget(QWidget):
     #Convert NANO amount to AUD
         new_balance=float(0)
         audprice = nano_value/float(price)
-        nano_aud = ("%.7f" % round(audprice,7))
+        nano_aud = ("%.6f" % round(audprice,6))
         nano_aud_float = float(nano_aud)
         
     #Write transaction details to file for HTML readfile
@@ -195,8 +195,8 @@ class MyTableWidget(QWidget):
         
         running = "true"
         while (running == "true"):
-            new_total = ("%.7f" % round(current_balance+nano_aud_float,7))
-            new_balance_round = ("%.7f" % round(new_balance,7))
+            new_total = ("%.6f" % round(current_balance+nano_aud_float,6))
+            new_balance_round = ("%.6f" % round(new_balance,6))
             
             print(nano_aud_float)
             print(current_balance)
