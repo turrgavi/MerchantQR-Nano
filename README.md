@@ -20,13 +20,12 @@ New version now supports automatic transaction confirmations. Requires desktop w
 
 In order to run this program, you will need a few things:
 
-* Python 3.4+
+* Python 3.6
 * CoinMarketCap API
 * PyQRCode
 * PyQt5
 * Nano Desktop Wallet with RPC enabled
 * Nano-Python
-* PyPNG
 
 ### Installing
 
@@ -55,7 +54,7 @@ This will install pip and put it into your python/scripts folder.
 ```
 cd C:\Users\[YOURUSERNAME]\AppData\Local\Programs\Python\Python36-32\Scripts
 
-pip3 install python-qt5 coinmarketcap pyqrcode pypng pyqt5
+pip3 install python-qt5 coinmarketcap pyqrcode pypng
 ```
 You should now be able to run the Merchant QR Nano.py
 
@@ -90,8 +89,7 @@ From here you can share your folder to read the HTML file from another device an
 
 ## License
 
-                    GNU GENERAL PUBLIC LICENSE
-                       Version 3, 29 June 2007
+Feel free to use this code and develop your own version to better suit you or better yet help me improve this! 
 
 ## Acknowledgments
 
