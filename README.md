@@ -20,12 +20,13 @@ New version now supports automatic transaction confirmations. Requires desktop w
 
 In order to run this program, you will need a few things:
 
-* Python 3.6
+* Python 3.4+
 * CoinMarketCap API
 * PyQRCode
 * PyQt5
 * Nano Desktop Wallet with RPC enabled
 * Nano-Python
+* PyPNG
 
 ### Installing
 
@@ -89,7 +90,7 @@ From here you can share your folder to read the HTML file from another device an
 
 ## License
 
-Feel free to use this code and develop your own version to better suit you or better yet help me improve this! 
+Under GNU GPL V3 License.
 
 ## Acknowledgments
 
