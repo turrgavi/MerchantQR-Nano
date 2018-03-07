@@ -90,7 +90,7 @@ From here you can share your folder to read the HTML file from another device an
 
 ## License
 
-* Under GNU GPL v3 License
+**GNU GPL v3 License**
 
 ## Acknowledgments
 
